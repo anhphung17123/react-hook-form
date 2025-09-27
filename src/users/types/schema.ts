@@ -17,6 +17,10 @@ export const schema = z.object({
     .array(z.string())
     .min(1, { message: "Select at least one language" }),
   gender: z.string().min(1, { message: "Select a gender" }),
+  skills: z
+    .array(z.string())
+    .min(1, { message: "Select at least one skill" })
+    .max(3, { message: "Select at most three skills" }),
 });
 
 export type Schema = z.infer<typeof schema>;
@@ -27,4 +31,5 @@ export const defaultValues: Schema = {
   states: [],
   languagesSpoken: [],
   gender: "",
+  skills: [],
 };

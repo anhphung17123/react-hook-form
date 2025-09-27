@@ -5,16 +5,21 @@ import { Stack, TextField } from "@mui/material";
 import {
   useGetGenders,
   useGetLanguages,
+  useGetSkills,
   useGetStates,
 } from "../services/queries";
 import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
 import { RHFRadioGroup } from "../../components/RHFRadioGroup";
+import { RHFCheckbox } from "../../components/RHFCheckbox";
 
 export function Users() {
   const { data: states, isLoading: statesLoading } = useGetStates();
   const { data: languages, isLoading: languagesLoading } = useGetLanguages();
   const { data: genders, isLoading: gendersLoading } = useGetGenders();
-  const isLoading = statesLoading || languagesLoading || gendersLoading;
+  const { data: skills, isLoading: skillsLoading } = useGetSkills();
+
+  const isLoading =
+    statesLoading || languagesLoading || gendersLoading || skillsLoading;
 
   const {
     register,
@@ -45,6 +50,7 @@ export function Users() {
         options={languages}
       />
       <RHFRadioGroup<Schema> label="Gender" name="gender" options={genders} />
+      <RHFCheckbox<Schema> label="Skills" name="skills" options={skills} />
     </Stack>
   );
 }
