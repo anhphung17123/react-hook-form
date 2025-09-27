@@ -5,33 +5,37 @@ import {
   type Path,
 } from "react-hook-form";
 import type { Option } from "../types/options";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
   options?: Option[];
+  exclusive?: boolean; // single select if true
 };
 
 export function RHFToggleButtonGroup<T extends FieldValues>({
   name,
   options = [],
+  exclusive = false,
 }: Props<T>) {
   const { control } = useFormContext<T>();
   return (
     <Controller
       control={control}
       name={name}
-      render={({
-        field: { value = [], onChange, ...rest },
-        formState: { errors },
-      }) => (
-        <>
+      render={({ field: { value, onChange }, formState: { errors } }) => (
+        <FormControl error={!!errors[name]}>
           <ToggleButtonGroup
+            exclusive={exclusive}
+            value={value ?? (exclusive ? null : [])}
             onChange={(_, newValue) => {
-              onChange(Array.isArray(newValue) ? newValue : []);
+              onChange(newValue);
             }}
-            value={Array.isArray(value) ? value : []}
-            {...rest}
           >
             {options.map((option) => (
               <ToggleButton value={option.id} key={option.id}>
@@ -40,13 +44,11 @@ export function RHFToggleButtonGroup<T extends FieldValues>({
             ))}
           </ToggleButtonGroup>
           {errors[name] && (
-            <label
-              style={{ color: "red", fontSize: "0.75rem", marginTop: "4px" }}
-            >
+            <FormHelperText error={!!errors[name]}>
               {String(errors[name]?.message)}
-            </label>
+            </FormHelperText>
           )}
-        </>
+        </FormControl>
       )}
     />
   );
