@@ -16,6 +16,7 @@ export const schema = z.object({
   languagesSpoken: z
     .array(z.string())
     .min(1, { message: "Select at least one language" }),
+  gender: z.string().min(1, { message: "Select a gender" }),
 });
 
 export type Schema = z.infer<typeof schema>;
@@ -25,4 +26,5 @@ export const defaultValues: Schema = {
   email: "",
   states: [],
   languagesSpoken: [],
+  gender: "",
 };
