@@ -2,45 +2,27 @@ import { useFormContext } from "react-hook-form";
 import { type Schema } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
 import { Stack, TextField } from "@mui/material";
-import { useGetLanguages, useGetStates } from "../services/queries";
+import {
+  useGetGenders,
+  useGetLanguages,
+  useGetStates,
+} from "../services/queries";
 import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
+import { RHFRadioGroup } from "../../components/RHFRadioGroup";
 
 export function Users() {
-  const {
-    data: states,
-    error: statesError,
-    isLoading: statesLoading,
-  } = useGetStates();
-  const {
-    data: languages,
-    error: languagesError,
-    isLoading: languagesLoading,
-  } = useGetLanguages();
+  const { data: states, isLoading: statesLoading } = useGetStates();
+  const { data: languages, isLoading: languagesLoading } = useGetLanguages();
+  const { data: genders, isLoading: gendersLoading } = useGetGenders();
+  const isLoading = statesLoading || languagesLoading || gendersLoading;
 
   const {
     register,
     formState: { errors },
   } = useFormContext<Schema>();
 
-  if (statesLoading || languagesLoading) {
+  if (isLoading) {
     return <div>Loading...</div>;
-  }
-
-  if (statesError || languagesError) {
-    return (
-      <div>
-        Error loading data.
-        <br />
-        {statesError && (
-          <div>States error: {String(statesError.message || statesError)}</div>
-        )}
-        {languagesError && (
-          <div>
-            Languages error: {String(languagesError.message || languagesError)}
-          </div>
-        )}
-      </div>
-    );
   }
 
   return (
@@ -62,6 +44,7 @@ export function Users() {
         name="languagesSpoken"
         options={languages}
       />
+      <RHFRadioGroup<Schema> label="Gender" name="gender" options={genders} />
     </Stack>
   );
 }
