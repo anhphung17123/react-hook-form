@@ -36,9 +36,9 @@ export function RHFCheckbox<T extends FieldValues>({
           <FormGroup>
             {options.map((option) => (
               <FormControlLabel
+                key={option.id}
                 control={
                   <Checkbox
-                    key={option.id}
                     checked={value.includes(option.id)}
                     onChange={() => {
                       if (value.includes(option.id)) {
