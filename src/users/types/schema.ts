@@ -23,6 +23,7 @@ export const schema = z.object({
     .max(3, { message: "Select at most three skills" }),
   registration: z.date(),
   formerPeriod: z.array(z.date()).min(2).max(2),
+  salaryRange: z.array(z.number()).min(2).max(2),
 });
 
 export type Schema = z.infer<typeof schema>;
@@ -36,4 +37,5 @@ export const defaultValues: Schema = {
   skills: [],
   registration: new Date(),
   formerPeriod: [new Date(), new Date()],
+  salaryRange: [0, 70000],
 };

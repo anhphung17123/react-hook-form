@@ -13,6 +13,7 @@ import { RHFRadioGroup } from "../../components/RHFRadioGroup";
 import { RHFCheckbox } from "../../components/RHFCheckbox";
 import { RHFDateTimePicker } from "../../components/RHFDateTimePicker";
 import { RHFDateRangePicker } from "../../components/RHFDateRangePicker";
+import { RHFSlider } from "../../components/RHFSlider";
 
 export function Users() {
   const { data: states, isLoading: statesLoading } = useGetStates();
@@ -61,6 +62,7 @@ export function Users() {
         name="formerPeriod"
         label="Former Employee Period"
       />
+      <RHFSlider<Schema> name="salaryRange" label="Salary Range" />
     </Stack>
   );
 }
