@@ -1,7 +1,6 @@
-import { useFormContext } from "react-hook-form";
 import { type Schema } from "../types/schema";
 import { RHFAutocomplete } from "../../components/RHFAutocomplete";
-import { Stack, TextField } from "@mui/material";
+import { Stack } from "@mui/material";
 import {
   useGetGenders,
   useGetLanguages,
@@ -15,6 +14,7 @@ import { RHFDateTimePicker } from "../../components/RHFDateTimePicker";
 import { RHFDateRangePicker } from "../../components/RHFDateRangePicker";
 import { RHFSlider } from "../../components/RHFSlider";
 import { RHFSwitch } from "../../components/RHFSwitch";
+import { RHFTextField } from "../../components/RHFTextField";
 
 export function Users() {
   const { data: states, isLoading: statesLoading } = useGetStates();
@@ -25,29 +25,14 @@ export function Users() {
   const isLoading =
     statesLoading || languagesLoading || gendersLoading || skillsLoading;
 
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext<Schema>();
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <Stack sx={{ gap: 2 }}>
-      <TextField
-        {...register("name")}
-        label="Name"
-        error={!!errors.name}
-        helperText={errors.name?.message}
-      />
-      <TextField
-        {...register("email")}
-        label="Email"
-        error={!!errors.email}
-        helperText={errors.email?.message}
-      />
+      <RHFTextField<Schema> name="name" label="Name" />
+      <RHFTextField<Schema> name="email" label="Email" />
       <RHFAutocomplete<Schema> label="States" name="states" options={states} />
       <RHFToggleButtonGroup<Schema>
         name="languagesSpoken"
