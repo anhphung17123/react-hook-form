@@ -11,6 +11,7 @@ import {
 import { RHFToggleButtonGroup } from "../../components/RHFToggleButtonGroup";
 import { RHFRadioGroup } from "../../components/RHFRadioGroup";
 import { RHFCheckbox } from "../../components/RHFCheckbox";
+import { RHFDateTimePicker } from "../../components/RHFDateTimePicker";
 
 export function Users() {
   const { data: states, isLoading: statesLoading } = useGetStates();
@@ -51,6 +52,7 @@ export function Users() {
       />
       <RHFRadioGroup<Schema> label="Gender" name="gender" options={genders} />
       <RHFCheckbox<Schema> label="Skills" name="skills" options={skills} />
+      <RHFDateTimePicker<Schema> name="registration" label="Registration Date & Time" />
     </Stack>
   );
 }
