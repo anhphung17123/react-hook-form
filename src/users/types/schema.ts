@@ -36,7 +36,7 @@ export const schema = z.intersection(
         z.object({ isTeacher: z.literal(false) }),
         z.object({
           isTeacher: z.literal(true),
-          student: z.array(
+          students: z.array(
             z.object({
               name: z.string().min(4, { message: "Required" }),
             })
